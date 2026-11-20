@@ -1,0 +1,14 @@
+import { createContext, useContext, useState, type ReactNode } from 'react';
+import { demoAgreement, type Agreement, type Service } from './data';
+export type Conversation = { id: number; name: string; initials: string; group: boolean; messages: { text: string; mine: boolean }[]; closed: boolean; service?: Service };
+type Store = { agreements: Agreement[]; setAgreements: React.Dispatch<React.SetStateAction<Agreement[]>>; balance: number; setBalance: React.Dispatch<React.SetStateAction<number>>; ledger: { label: string; amount: number; type: string }[]; setLedger: React.Dispatch<React.SetStateAction<{label: string; amount: number; type: string}[]>>; chats: Conversation[]; setChats: React.Dispatch<React.SetStateAction<Conversation[]>>; openChat: (service: Service, group?: boolean) => void; offered: number[]; setOffered: React.Dispatch<React.SetStateAction<number[]>>; wanted: number[]; setWanted: React.Dispatch<React.SetStateAction<number[]>>; name: string; setName: React.Dispatch<React.SetStateAction<string>> };
+const Context = createContext<Store | null>(null);
+export function DemoProvider({children}: {children: ReactNode}) {
+ const [agreements,setAgreements]=useState<Agreement[]>([demoAgreement]); const [balance,setBalance]=useState(1250);
+ const [ledger,setLedger]=useState([{label:'Edição de vídeo · Emma Wilson',amount:-80,type:'Reserva'},{label:'Desenvolvimento web · Sofia Martins',amount:200,type:'Recebido'},{label:'Copywriting · Clara Rossi',amount:-60,type:'Utilizado'}]);
+ const [chats,setChats]=useState<Conversation[]>([{id:1,name:'Sofia Martins',initials:'SM',group:false,closed:false,messages:[{text:'Olá, Alex! Adorei seu portfólio. Podemos conversar sobre a identidade visual?',mine:false},{text:'Oi, Sofia! Claro, o que você tem em mente?',mine:true},{text:'Pensei em trocar a identidade visual pelo desenvolvimento do meu site. O que acha?',mine:false}]},{id:2,name:'Emma Wilson',initials:'EW',group:false,closed:false,messages:[{text:'A primeira versão do seu vídeo estará pronta amanhã! 🎬',mine:false}]}]);
+ const [offered,setOffered]=useState([1,7]); const [wanted,setWanted]=useState([0,2,3]); const [name,setName]=useState('Alex Morgan');
+ function openChat(service: Service, group=false) { setChats(prev=>prev.some(c=>c.name===(group?'Troca triangular':service.person)&&!c.closed)?prev:[...prev,{id:Date.now(),name:group?'Troca triangular':service.person,initials:group?'3':service.initials,group,closed:false,service,messages:[{text:group?'Sofia e Emma entraram na conversa. Vamos combinar os três serviços?':'Olá! Vamos conversar sobre os detalhes do serviço?',mine:false}]}]); }
+ return <Context.Provider value={{agreements,setAgreements,balance,setBalance,ledger,setLedger,chats,setChats,openChat,offered,setOffered,wanted,setWanted,name,setName}}>{children}</Context.Provider>;
+}
+export function useDemo(){const store=useContext(Context);if(!store)throw new Error('DemoProvider required');return store;}

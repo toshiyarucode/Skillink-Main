@@ -28,3 +28,8 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Application architecture
+- Keep demo domain state in a shared React provider above the route outlet; simulated flows must carry across screens without introducing real payments or persistence.
+- Keep discovery, negotiated agreements and service execution separate; domain helpers enforce approvals and only move simulated SC for explicitly agreed credit portions.
+- Use independent TanStack leaf routes for each primary screen, sharing navigation and focused feature modules.
