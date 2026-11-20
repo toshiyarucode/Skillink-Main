@@ -1,5 +1,5 @@
 # MVP roadmap
-- [ ] Apply the confirmed name Skillink throughout the application
+- [x] Apply the confirmed name Skillink throughout the application
 - [ ] Design system and shared navigation
 - [ ] Dashboard and searchable marketplace
 - [ ] Bilateral and triangular matching

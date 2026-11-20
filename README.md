@@ -1,6 +1,6 @@
-# Screenshot to Pixel
+# Skillink
 
-Implement exactly the screenshot and nothing else
+Marketplace internacional de serviços digitais com Service Credits (SC), combinando compra de serviços e matching de talentos para trocas.
 
 This project was built with [Lovable](https://lovable.dev).
 
@@ -18,7 +18,7 @@ Prefer working locally? You need Node.js and npm — [install with nvm](https://
 
 ```sh
 git clone <this-repository-url>
-cd <repository-name>
+cd <this-repository-name>
 npm i
 npm run dev
 ```
